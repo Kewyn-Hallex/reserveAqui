@@ -4,7 +4,7 @@
 :root {
   --header-height: 4.5rem;
   --first-color: #ff7b00;
-  --dark-color: #1C1D24;
+  --dark-color: #121212;
   --dark-color-alt: #282B3A;
   --white-color: #E6E7E9;
   --body-font: 'Poppins', sans-serif;
@@ -30,7 +30,7 @@ body {
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   font-weight: 500;
-  background-color: #1C1D24;
+  background-color: #121212;
 }
 
 ul {

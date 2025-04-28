@@ -74,14 +74,45 @@
     </section>
 
     <section class="section3">
-        <div class="search-bar">
+        <div class="search-bar" id="search-bar">
             <div class="guest-selection">
                 <span id="guest-info">2 adultos · 0 criança · 1 quarto</span>
                 <button id="guest-button">▼</button>
             </div>
-            <button class="search-button">Pesquisar</button>
+            <!-- Corrigi aqui: adicionei id="apply-button" no botão -->
+            <button class="search-button" id="apply-button">Aplicar</button>
+        </div>
+
+        <!-- Card fica AQUI fora da search-bar -->
+        <div class="guest-card" id="guest-card">
+            <div class="guest-option">
+                <span>Adultos</span>
+                <div class="counter">
+                    <button class="counter-btn" id="adult-decrease">-</button>
+                    <span id="adult-count">2</span>
+                    <button class="counter-btn" id="adult-increase">+</button>
+                </div>
+            </div>
+            <div class="guest-option">
+                <span>Crianças</span>
+                <div class="counter">
+                    <button class="counter-btn" id="child-decrease">-</button>
+                    <span id="child-count">0</span>
+                    <button class="counter-btn" id="child-increase">+</button>
+                </div>
+            </div>
+            <div class="guest-option">
+                <span>Quartos</span>
+                <div class="counter">
+                    <button class="counter-btn" id="room-decrease">-</button>
+                    <span id="room-count">1</span>
+                    <button class="counter-btn" id="room-increase">+</button>
+                </div>
+            </div>
         </div>
     </section>
+
+
 
     <section class="section4">
         <h6 class="servicos">QUARTOS</h6>
@@ -99,7 +130,7 @@
                 </div>
             </div>
             <div class="card">
-                <img src="assets/img/quartoPorto.jpeg" alt="Corte de cabelo" class="card-image">
+                <img src="assets/img/quarto2Porto.jpeg" alt="Corte de cabelo" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Casal Frente Mar</h3>
                     <p class="card-description">com vista incrível e todo o conforto para sua estadia.</p>
@@ -121,7 +152,7 @@
                 </div>
             </div>
             <div class="card">
-                <img src="assets/img/quartoPorto.jpeg" alt="Corte de cabelo" class="card-image">
+                <img src="assets/img/quarto2Porto.jpeg" alt="Corte de cabelo" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Triplo Frente Mar</h3>
                     <p class="card-description">Espaço, conforto e uma vista deslumbrante.</p>
@@ -143,10 +174,11 @@
                 </div>
             </div>
             <div class="card">
-                <img src="assets/img/quartoPorto.jpeg" alt="Corte de cabelo" class="card-image">
+                <img src="assets/img/quarto2Porto.jpeg" alt="Corte de cabelo" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Quadruplo Frente Mar</h3>
-                    <p class="card-description">Desperte com a brisa do mar. Espaçoso, perfeito para momentos inesquecíveis.</p>
+                    <p class="card-description">Desperte com a brisa do mar. Espaçoso, perfeito para momentos
+                        inesquecíveis.</p>
                     <div class="card-footer">
                         <span class="card-price">R$ 380,00</span>
                         <button class="card-button">Reservar</button>
@@ -162,6 +194,8 @@
     <!--===== MAIN JS =====-->
     <script src="assets/js/main.js"></script>
     <script src="assets/js/data.js"></script>
+    <script src="assets/js/filtro.js"></script>
+    <script src="assets/js/fomulario.js"></script>
 </body>
 
 </html>

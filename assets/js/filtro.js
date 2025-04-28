@@ -1,43 +1,104 @@
-let reservas = [];
+// Variáveis dos contadores
+let adultCount = 2;
+let childCount = 0;
+let roomCount = 1;
 
-function adicionarQuarto(tipo) {
-    // Adiciona o quarto selecionado ao carrinho de reservas
-    reservas.push({ tipo: tipo, data: new Date().toISOString() });
+// Elementos HTML
+const adultCountElement = document.getElementById('adult-count');
+const childCountElement = document.getElementById('child-count');
+const roomCountElement = document.getElementById('room-count');
+const guestInfoElement = document.getElementById('guest-info');
+const guestButton = document.getElementById('guest-button');
+const guestCard = document.getElementById('guest-card');
+const guestSelection = document.querySelector('.guest-selection');
+const applyButton = document.getElementById('apply-button'); // Botão "Aplicar"
 
-    // Atualiza a lista de reservas exibida
-    atualizarListaReservas();
+// Atualizar o texto de hóspedes
+function updateGuestInfo() {
+    guestInfoElement.textContent = `${adultCount} adulto${adultCount > 1 ? 's' : ''} · ${childCount} criança${childCount !== 1 ? 's' : ''} · ${roomCount} quarto${roomCount > 1 ? 's' : ''}`;
 }
 
-function atualizarListaReservas() {
-    const listaReservas = document.getElementById('listaReservas');
-    listaReservas.innerHTML = ''; // Limpa a lista atual
-
-    // Exibe todos os quartos no carrinho
-    reservas.forEach((reserva, index) => {
-        const li = document.createElement('li');
-        li.textContent = `Quarto ${reserva.tipo.charAt(0).toUpperCase() + reserva.tipo.slice(1)} - Data: ${reserva.data}`;
-        listaReservas.appendChild(li);
-    });
+// Funções de incrementar e decrementar
+function increaseAdults() {
+    adultCount++;
+    adultCountElement.textContent = adultCount;
+    updateGuestInfo();
 }
 
-document.getElementById('formularioReserva').addEventListener('submit', function(event) {
-    event.preventDefault();
+function decreaseAdults() {
+    if (adultCount > 1) {
+        adultCount--;
+        adultCountElement.textContent = adultCount;
+        updateGuestInfo();
+    }
+}
 
-    const nome = document.getElementById('nome').value;
-    const email = document.getElementById('email').value;
+function increaseChildren() {
+    childCount++;
+    childCountElement.textContent = childCount;
+    updateGuestInfo();
+}
 
-    // Enviar todas as reservas para o número do WhatsApp do dono do hotel
-    enviarParaWhatsApp(nome, email, reservas);
+function decreaseChildren() {
+    if (childCount > 0) {
+        childCount--;
+        childCountElement.textContent = childCount;
+        updateGuestInfo();
+    }
+}
+
+function increaseRooms() {
+    roomCount++;
+    roomCountElement.textContent = roomCount;
+    updateGuestInfo();
+}
+
+function decreaseRooms() {
+    if (roomCount > 1) {
+        roomCount--;
+        roomCountElement.textContent = roomCount;
+        updateGuestInfo();
+    }
+}
+
+// Eventos dos botões de contagem
+document.getElementById('adult-increase').addEventListener('click', increaseAdults);
+document.getElementById('adult-decrease').addEventListener('click', decreaseAdults);
+document.getElementById('child-increase').addEventListener('click', increaseChildren);
+document.getElementById('child-decrease').addEventListener('click', decreaseChildren);
+document.getElementById('room-increase').addEventListener('click', increaseRooms);
+document.getElementById('room-decrease').addEventListener('click', decreaseRooms);
+
+// Evento de abrir/fechar o card
+guestButton.addEventListener('click', (e) => {
+    e.stopPropagation(); // Impede de fechar imediatamente
+    guestCard.style.display = guestCard.style.display === 'block' ? 'none' : 'block';
 });
 
-function enviarParaWhatsApp(nome, email, reservas) {
-    let mensagem = `Reservas:\nNome: ${nome}\nEmail: ${email}\n\n`;
+// Fecha o card se clicar fora
+document.addEventListener('click', (e) => {
+    if (!guestCard.contains(e.target) && !guestButton.contains(e.target)) {
+        guestCard.style.display = 'none';
+    }
+});
 
-    reservas.forEach(reserva => {
-        mensagem += `Quarto: ${reserva.tipo.charAt(0).toUpperCase() + reserva.tipo.slice(1)}\nData da Reserva: ${reserva.data}\n\n`;
-    });
+// Evento para montar e enviar a mensagem ao clicar em "Aplicar"
+applyButton.addEventListener('click', () => {
+    const adultos = adultCount;
+    const criancas = childCount;
+    const quartos = roomCount;
+    // Montar a mensagem
+    const mensagem = `Olá! Gostaria de reservar:\n- ${adultos} adulto${adultos > 1 ? 's' : ''}\n- ${criancas} criança${criancas !== 1 ? 's' : ''}\n- ${quartos} quarto${quartos > 1 ? 's' : ''}`;
 
-    // Gerar URL para enviar via WhatsApp
-    const urlWhatsApp = `https://wa.me/5511XXXXXXX?text=${encodeURIComponent(mensagem)}`;
-    window.open(urlWhatsApp, '_blank');
-}
+    // Codificar a mensagem para o WhatsApp
+    const mensagemCodificada = encodeURIComponent(mensagem);
+
+    // Número do WhatsApp (substituir por seu número)
+    const numeroTelefone = '5591985668050'; // Exemplo: 55 + DDD + número
+
+    // Link para abrir no WhatsApp
+    const linkWhatsapp = `https://wa.me/${numeroTelefone}?text=${mensagemCodificada}`;
+
+    // Abrir o WhatsApp
+    window.open(linkWhatsapp, '_blank');
+});
