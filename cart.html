@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seu Carrinho</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/cart.css">
+    <!-- ===== BOOTSTRAP ICONS ===== -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+
+    <a class="voltar" href="index.html"><i class="bi bi-arrow-left"></i></a>
+    <h1 class="reserva">RESERVA</h1>
+    <div id="cart-container"></div>
+
+    <div class="total-section">
+        Total: R$ <span id="total-value">0.00</span>
+    </div>
+
+    <button class="pay-button" id="finalizar-compra">CONFIRMAR</button>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        const container = document.getElementById('cart-container');
+        const totalDisplay = document.getElementById('total-value');
+
+        if (cart.length === 0) {
+            container.innerHTML = '<p>Sem reserva.</p>';
+        } else {
+            cart.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+
+                div.innerHTML = `
+          <img src="${item.image}" alt="${item.title}">
+          <div class="cart-info">
+            <div class="cart-title">${item.title}</div>
+            <div class="cart-price">Preço: R$ ${item.price}</div>
+            <div class="quantity-controls">
+              <button onclick="decreaseQuantity(${index})">-</button>
+              <input type="text" id="quantity-${index}" value="1" readonly>
+              <button onclick="increaseQuantity(${index})">+</button>
+            </div>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${index})"><i class="bi bi-trash-fill"></i></button>
+        `;
+                container.appendChild(div);
+            });
+
+            updateTotal();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            location.reload();
+        }
+
+        function decreaseQuantity(index) {
+            const input = document.getElementById(`quantity-${index}`);
+            let value = parseInt(input.value);
+            if (value > 1) {
+                input.value = value - 1;
+                updateTotal();
+            }
+        }
+
+        function increaseQuantity(index) {
+            const input = document.getElementById(`quantity-${index}`);
+            let value = parseInt(input.value);
+            input.value = value + 1;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = 0;
+            cart.forEach((item, index) => {
+                const qty = parseInt(document.getElementById(`quantity-${index}`).value);
+                const price = parseFloat(item.price.replace('R$', '').replace(',', '.'));
+                total += qty * price;
+            });
+            totalDisplay.textContent = total.toFixed(2).replace('.', ',');
+        }
+    </script>
+
+    <script src="assets/js/armazena.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/confirmarReserva.js"></script>
+
+</body>
+
+</html>
