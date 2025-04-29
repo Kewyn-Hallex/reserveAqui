@@ -37,18 +37,26 @@
                 div.className = 'cart-item';
 
                 div.innerHTML = `
-          <img src="${item.image}" alt="${item.title}">
-          <div class="cart-info">
-            <div class="cart-title">${item.title}</div>
-            <div class="cart-price">Preço: R$ ${item.price}</div>
-            <div class="quantity-controls">
-              <button onclick="decreaseQuantity(${index})">-</button>
-              <input type="text" id="quantity-${index}" value="1" readonly>
-              <button onclick="increaseQuantity(${index})">+</button>
-            </div>
-          </div>
-          <button class="remove-btn" onclick="removeItem(${index})"><i class="bi bi-trash-fill"></i></button>
-        `;
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="cart-info">
+                        <div class="cart-title">${item.title}</div>
+                        <div class="cart-price">Preço: R$ <span id="price-${index}">${item.price}</span></div>
+    
+                        <div class="quantity-controls">
+                            <button onclick="decreaseQuantity(${index})">-</button>
+                            <input type="text" id="quantity-${index}" value="1" readonly>
+                            <button onclick="increaseQuantity(${index})">+</button>
+                        </div>
+
+                        <div class="extras">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" class="extra-checkbox" id="extra-${index}" onchange="updateTotal()">
+                                TV e Frigobar
+                            </label>
+                        </div>
+                    </div>
+                    <button class="remove-btn" onclick="removeItem(${index})"><i class="bi bi-trash-fill"></i></button>
+                `;
                 container.appendChild(div);
             });
 
@@ -79,14 +87,20 @@
 
         function updateTotal() {
             let total = 0;
+
             cart.forEach((item, index) => {
                 const qty = parseInt(document.getElementById(`quantity-${index}`).value);
-                const price = parseFloat(item.price.replace('R$', '').replace(',', '.'));
-                total += qty * price;
+                let price = parseFloat(item.price.replace('R$', '').replace(',', '.'));
+
+                const extra = document.getElementById(`extra-${index}`).checked ? 20 : 0;
+
+                total += qty * (price + extra);
             });
+
             totalDisplay.textContent = total.toFixed(2).replace('.', ',');
         }
     </script>
+
 
     <script src="assets/js/armazena.js"></script>
     <script src="assets/js/cart.js"></script>

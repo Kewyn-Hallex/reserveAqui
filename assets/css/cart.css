@@ -138,3 +138,12 @@ h1 {
     cursor: pointer;
     color: aliceblue;
 }
+
+.extras {
+    margin-top: 5px;
+}
+
+input[type="checkbox"]:checked {
+    accent-color: #ff7b00;
+    color: white;
+}

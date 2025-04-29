@@ -8,12 +8,22 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
 
     let message = "Olá! Gostaria de reservar:%0A";
 
-    cart.forEach((item) => {
-        message += `* ${item.title}%0A`;
-        message += `  - Adultos: ${item.adultos}%0A`;
-        message += `  - Crianças: ${item.criancas}%0A`;
-        message += `  - Quartos: ${item.quartos}%0A%0A`;
+    // Parte 1: Listar os quartos de acordo com a quantidade de cada um
+    cart.forEach((item, index) => {
+        const quantityInput = document.getElementById(`quantity-${index}`);
+        const quantity = parseInt(quantityInput.value);
+
+        for (let i = 0; i < quantity; i++) {
+            message += `* ${item.title}%0A`;
+        }
     });
+
+    // Parte 2: Pegando os dados (assumindo que são iguais para todos)
+    const { adultos, criancas, quartos } = cart[0];
+
+    message += `%0A  - Adultos: ${adultos}%0A`;
+    message += `  - Crianças: ${criancas}%0A`;
+    message += `  - Quartos: ${quartos}%0A`;
 
     const phone = '5591985668050';
     const whatsappURL = `https://wa.me/${phone}?text=${message}`;
