@@ -6,7 +6,15 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
         return;
     }
 
+    const name = localStorage.getItem('userName') || 'Não informado';
+    const ddd = localStorage.getItem('userDDD') || '--';
+    const numero = localStorage.getItem('userPhoneNumber') || '--------';
+    const phoneUser = `(${ddd}) ${numero}`;
+
     let message = "✨ *Solicitação de Reserva* ✨%0A%0A";
+    message += `👤 *Nome:* ${name}%0A`;
+    message += `📱 *Telefone:* ${phoneUser}%0A%0A`;
+
     message += "🛌 *Detalhes da hospedagem:*%0A";
     let total = 0;
 
@@ -26,7 +34,6 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
         total += precoTotalItem;
     });
 
-    // Dados adicionais (se existirem)
     if (cart[0].adultos && cart[0].criancas && cart[0].quartos) {
         message += `%0A👥 *Adultos:* ${cart[0].adultos}%0A`;
         message += `👶 *Crianças:* ${cart[0].criancas}%0A`;
