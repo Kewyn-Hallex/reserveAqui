@@ -1,43 +1,64 @@
+// Atualiza o contador no carrinho
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const cartCountElement = document.getElementById('cart-count');
+  if (cartCountElement) {
+    cartCountElement.textContent = cart.length;
+  }
+}
+
+// Chamada inicial ao carregar a página
+updateCartCount();
+
 const buttons = document.querySelectorAll('.card-button');
 
-// Instância global do Notyf
 const notyf = new Notyf({
-  position: {
-    x: 'center',
-    y: 'top',
-  },
-  duration: 2500,
-  types: [
-    {
-      type: 'success',
-      background: '#4BB543', // Verde mais personalizado
-      icon: {
-        className: 'fas fa-check-circle',
-        tagName: 'i',
-        color: '#fff'
-      }
+position: {
+  x: 'center',
+  y: 'top',
+},
+duration: 2500,
+types: [
+  {
+    type: 'success',
+    background: '#4BB543',
+    icon: {
+      className: 'fas fa-check-circle',
+      tagName: 'i',
+      color: '#fff'
     }
-  ]
+  }
+]
 });
 
 buttons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const card = button.closest('.card');
-    const title = card.querySelector('.card-title').textContent;
-    const price = card.querySelector('.card-price').textContent;
-    const image = card.querySelector('.card-image').getAttribute('src');
+button.addEventListener('click', () => {
+  const card = button.closest('.card');
+  const title = card.querySelector('.card-title').textContent;
+  const price = card.querySelector('.card-price').textContent;
+  const image = card.querySelector('.card-image').getAttribute('src');
 
-    const adultos = document.getElementById('adult-count').textContent;
-    const criancas = document.getElementById('child-count').textContent;
-    const quartos = document.getElementById('room-count').textContent;
+  const adultos = document.getElementById('adult-count').textContent;
+  const criancas = document.getElementById('child-count').textContent;
+  const quartosSelecionados = roomCount; // Usando roomCount da search bar
 
-    const room = { title, price, image, adultos, criancas, quartos };
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.push(room);
-    localStorage.setItem('cart', JSON.stringify(cart));
+  // Verifica se o número de quartos no carrinho já atingiu o limite
+  if (cart.length >= quartosSelecionados) {
+    notyf.error('Você já adicionou o número máximo de quartos selecionados!');
+    return; // Impede que o quarto seja adicionado
+  }
 
-    // Alerta estilizado com Notyf
-    notyf.success(`"${title}" adicionado à sua reserva!`);
-  });
+  const room = { title, price, image, adultos, criancas, quartos: 1 };
+
+  cart.push(room);
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+  // Atualiza o contador no ícone
+  updateCartCount();
+
+  // Notificação personalizada
+  notyf.success(`"${title}" adicionado à sua reserva!`);
+});
 });
