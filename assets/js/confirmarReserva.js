@@ -6,6 +6,25 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
         return;
     }
 
+    const checkin = document.getElementById('checkin').value;
+    const checkout = document.getElementById('checkout').value;
+
+    if (!checkin || !checkout) {
+        alert('Por favor, selecione as datas de entrada e saída.');
+        return;
+    }
+
+    const dataEntrada = new Date(checkin);
+    const dataSaida = new Date(checkout);
+
+    const diffTime = dataSaida - dataEntrada;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays <= 0) {
+        alert('A data de saída deve ser após a data de entrada.');
+        return;
+    }
+
     const name = localStorage.getItem('userName') || 'Não informado';
     const ddd = localStorage.getItem('userDDD') || '--';
     const numero = localStorage.getItem('userPhoneNumber') || '--------';
@@ -14,6 +33,8 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
     let message = "✨ *Solicitação de Reserva* ✨%0A%0A";
     message += `👤 *Nome:* ${name}%0A`;
     message += `📱 *Telefone:* ${phoneUser}%0A%0A`;
+    message += `📅 *Entrada:* ${checkin.replace(/-/g, '/')} | 🏁 *Saída:* ${checkout.replace(/-/g, '/')}%0A`;
+    message += `🕓 *Total de diárias:* ${diffDays} dia(s)%0A%0A`;
 
     message += "🛌 *Detalhes da hospedagem:*%0A";
     let total = 0;
@@ -25,10 +46,13 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
 
         const preco = parseFloat(item.price.replace('R$', '').replace(',', '.'));
         const precoExtra = extraChecked ? 20 : 0;
-        const precoTotalItem = (preco + precoExtra) * quantity;
+        const precoDiaria = preco + precoExtra;
+        const precoTotalItem = precoDiaria * quantity * diffDays;
 
         for (let i = 0; i < quantity; i++) {
             message += `• ${item.title}${extraChecked ? " (com *TV* e *Frigobar*)" : ""}%0A`;
+            message += `  ↪ Valor da diária: R$ ${precoDiaria.toFixed(2).replace('.', ',')}%0A`;
+            message += `  ↪ Total por ${diffDays} diária(s): R$ ${(precoDiaria * diffDays).toFixed(2).replace('.', ',')}%0A`;
         }
 
         total += precoTotalItem;
@@ -41,9 +65,18 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
     }
 
     const totalFormatado = total.toFixed(2).replace('.', ',');
-    message += `%0A💵 *Valor total:* R$ ${totalFormatado}`;
+    message += `%0A💵 *Valor total da hospedagem:* R$ ${totalFormatado}`;
 
     const phone = '5591985668050';
     const whatsappURL = `https://wa.me/${phone}?text=${message}`;
+
+    // Limpa carrinho
+    localStorage.removeItem('cart');
+
+    // Limpa datas
+    document.getElementById('checkin').value = '';
+    document.getElementById('checkout').value = '';
+
+    // Redireciona para o WhatsApp
     window.location.href = whatsappURL;
 });
