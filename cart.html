@@ -16,98 +16,12 @@
     <a class="voltar" href="index.html"><i class="bi bi-arrow-left"></i></a>
     <h1 class="reserva">RESERVA</h1>
     <div id="cart-container"></div>
-    <div class="date-selection">
-        <label for="checkin">Data de entrada:</label>
-        <input type="date" id="checkin">
-    
-        <label for="checkout">Data de saída:</label>
-        <input type="date" id="checkout">
-    </div>
 
     <div class="total-section">
         Total: R$ <span id="total-value">0.00</span>
     </div>
 
     <button class="pay-button" id="finalizar-compra">CONFIRMAR</button>
-
-    <script>
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        const container = document.getElementById('cart-container');
-        const totalDisplay = document.getElementById('total-value');
-
-        if (cart.length === 0) {
-            container.innerHTML = '<p>Sem reserva.</p>';
-        } else {
-            cart.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.className = 'cart-item';
-
-                div.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}">
-                    <div class="cart-info">
-                        <div class="cart-title">${item.title}</div>
-                        <div class="cart-price">Preço: R$ <span id="price-${index}">${item.price}</span></div>
-    
-                        <div class="quantity-controls">
-                            <button onclick="decreaseQuantity(${index})">-</button>
-                            <input type="text" id="quantity-${index}" value="1" readonly>
-                            <button onclick="increaseQuantity(${index})">+</button>
-                        </div>
-
-                        <div class="extras">
-                            <label class="custom-checkbox">
-                                <input type="checkbox" class="extra-checkbox" id="extra-${index}" onchange="updateTotal()">
-                                TV e Frigobar
-                            </label>
-                        </div>
-                    </div>
-                    <button class="remove-btn" onclick="removeItem(${index})"><i class="bi bi-trash-fill"></i></button>
-                `;
-                container.appendChild(div);
-            });
-
-            updateTotal();
-        }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            location.reload();
-        }
-
-        function decreaseQuantity(index) {
-            const input = document.getElementById(`quantity-${index}`);
-            let value = parseInt(input.value);
-            if (value > 1) {
-                input.value = value - 1;
-                updateTotal();
-            }
-        }
-
-        function increaseQuantity(index) {
-            const input = document.getElementById(`quantity-${index}`);
-            let value = parseInt(input.value);
-            input.value = value + 1;
-            updateTotal();
-        }
-
-        function updateTotal() {
-            let total = 0;
-
-            cart.forEach((item, index) => {
-                const qty = parseInt(document.getElementById(`quantity-${index}`).value);
-                let price = parseFloat(item.price.replace('R$', '').replace(',', '.'));
-
-                const extra = document.getElementById(`extra-${index}`).checked ? 20 : 0;
-
-                total += qty * (price + extra);
-            });
-
-            totalDisplay.textContent = total.toFixed(2).replace('.', ',');
-        }
-    </script>
-
 
     <script src="assets/js/armazena.js"></script>
     <script src="assets/js/cart.js"></script>

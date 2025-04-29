@@ -150,6 +150,60 @@
     margin: 0 5px;
 }
 
+.calendar-container {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 10px;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    max-width: 320px;
+    z-index: 100;
+  }
+  
+  .calendar-selection {
+    cursor: pointer;
+    background-color: #f2f2f2;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-left: 12px;
+    user-select: none;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 10px;
+    width: 50%;
+    text-align: center;
+    font-size: 0.8rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  
+  .day {
+    padding: 6px 10px;
+    background-color: #eee;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+  }
+  
+  .day:hover {
+    background-color: #ccc;
+  }
+  
+  .date-start {
+    background-color: #4caf50 !important;
+    color: white;
+  }
+  
+  .date-end {
+    background-color: #f44336 !important;
+    color: white;
+  }
+  
+
 /*QUARTA SECTION DE CARDS*/
 
 .section4 {
@@ -218,7 +272,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
 }
 
 .card-price {

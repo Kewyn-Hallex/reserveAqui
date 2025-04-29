@@ -147,22 +147,3 @@ input[type="checkbox"]:checked {
     accent-color: #ff7b00;
     color: white;
 }
-
-.date-selection {
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-family: 'Roboto', sans-serif;
-}
-
-.date-selection label {
-    font-weight: bold;
-}
-
-.date-selection input {
-    padding: 8px;
-    font-size: 1rem;
-    border-radius: 10px;
-    border: none;
-}

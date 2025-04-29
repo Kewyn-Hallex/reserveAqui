@@ -97,7 +97,6 @@
                 <span id="guest-info">2 adultos · 0 criança · 1 quarto</span>
                 <button id="guest-button">▼</button>
             </div>
-            <!-- Corrigi aqui: adicionei id="apply-button" no botão -->
             <button class="search-button" id="apply-button">Aplicar</button>
         </div>
 
@@ -128,7 +127,13 @@
                 </div>
             </div>
         </div>
+        <div class="calendar-selection" id="calendar-selection">
+            <span id="date-text">Quando?</span>
+        </div>
+        <!-- Calendário abaixo do search-bar -->
+        <div class="calendar-container" id="calendar" style="display: none;"></div>
     </section>
+
 
     <section class="section4">
         <h6 class="servicos">QUARTOS</h6>
@@ -138,7 +143,7 @@
                 <img src="assets/img/quartoPorto.jpeg" alt="Corte de cabelo" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Quarto Casal</h3>
-                    <p class="card-description">Ideal para uma estadia relaxante.</p>
+                    <p class="card-description">Ideal para uma estadia relaxante.<br>Diária:</p>
                     <div class="card-footer">
                         <span class="card-price">R$ 170,00</span>
                         <button class="card-button">Reservar</button>
@@ -149,7 +154,7 @@
                 <img src="assets/img/quarto2Porto.jpeg" alt="Corte de cabelo" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Casal Frente Mar</h3>
-                    <p class="card-description">com vista incrível e todo o conforto para sua estadia.</p>
+                    <p class="card-description">com vista incrível e todo o conforto para sua estadia.<br>Diária:</p>
                     <div class="card-footer">
                         <span class="card-price">R$ 260,00</span>
                         <button class="card-button">Reservar</button>
@@ -160,7 +165,7 @@
                 <img src="assets/img/quartoPorto.jpeg" alt="Corte de cabelo" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Quarto Triplo</h3>
-                    <p class="card-description">Espaçoso e aconchegante, perfeito para famílias ou grupos.</p>
+                    <p class="card-description">Espaçoso e aconchegante, perfeito para famílias ou grupos.<br>Diária:</p>
                     <div class="card-footer">
                         <span class="card-price">R$ 240,00</span>
                         <button class="card-button">Reservar</button>
@@ -171,7 +176,7 @@
                 <img src="assets/img/quarto2Porto.jpeg" alt="Corte de cabelo" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Triplo Frente Mar</h3>
-                    <p class="card-description">Espaço, conforto e uma vista deslumbrante.</p>
+                    <p class="card-description">Espaço, conforto e uma vista deslumbrante.<br>Diária:</p>
                     <div class="card-footer">
                         <span class="card-price">R$ 320,00</span>
                         <button class="card-button">Reservar</button>
@@ -182,7 +187,7 @@
                 <img src="assets/img/quartoPorto.jpeg" alt="Corte de cabelo" class="card-image">
                 <div class="card-content">
                     <h3 class="card-title">Quarto Quadruplo</h3>
-                    <p class="card-description">amplo e confortável, ideal para famílias ou grupos maiores.</p>
+                    <p class="card-description">amplo e confortável, ideal para famílias ou grupos maiores.<br>Diária:</p>
                     <div class="card-footer">
                         <span class="card-price">R$ 300,00</span>
                         <button class="card-button">Reservar</button>
@@ -194,7 +199,7 @@
                 <div class="card-content">
                     <h3 class="card-title">Quadruplo Frente Mar</h3>
                     <p class="card-description">Desperte com a brisa do mar. Espaçoso, perfeito para momentos
-                        inesquecíveis.</p>
+                        inesquecíveis.<br>Diária:</p>
                     <div class="card-footer">
                         <span class="card-price">R$ 380,00</span>
                         <button class="card-button">Reservar</button>
@@ -222,6 +227,7 @@
     <script src="assets/js/cart.js"></script>
     <script src="assets/js/confirmarReserva.js"></script>
     <script src="assets/js/formularioInicial.js"></script>
+    <script src="assets/js/caledario.js"></script>
 </body>
 
 </html>
