@@ -110,8 +110,20 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
     message += `👤 *Nome:* ${name}%0A`;
     message += `📱 *Telefone:* ${phoneUser}%0A%0A`;
 
-    message += `🗓️ *Entrada:* ${entradaStr || 'Não informada'}%0A`;
-    message += `🏁 *Saída:* ${saidaStr || 'Não informada'}%0A`;
+    // Formatar as datas sem o horário
+    const formatDate = (dateStr) => {
+        const date = new Date(dateStr);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses começam em 0
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+    const entradaFormatada = entradaStr ? formatDate(entradaStr) : 'Não informada';
+    const saidaFormatada = saidaStr ? formatDate(saidaStr) : 'Não informada';
+
+    message += `🗓️ *Entrada:* ${entradaFormatada}%0A`;
+    message += `🏁 *Saída:* ${saidaFormatada}%0A`;
     message += `📆 *Diárias:* ${diasHospedagem}%0A%0A`;
 
     message += "🛌 *Detalhes da hospedagem:*%0A";
@@ -151,4 +163,5 @@ document.getElementById('finalizar-compra').addEventListener('click', () => {
     // Redirecionar para o WhatsApp
     window.location.href = whatsappURL;
 });
+
 
